@@ -1,8 +1,11 @@
+using Protocols.DB;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<ProtocolsContext>();
 
 var app = builder.Build();
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Protocols.DB;
 
 namespace Protocols.Controllers;
 
@@ -21,6 +22,17 @@ public class WeatherForecastController : ControllerBase
     [HttpGet]
     public IEnumerable<WeatherForecast> Get()
     {
+        using (var db = new ProtocolsContext())
+        {
+            ProtocolMissionGroup protocolMissionGroup = new ProtocolMissionGroup();
+            protocolMissionGroup.CreatedDate = DateTime.Now;
+            protocolMissionGroup.Id = Guid.NewGuid();
+            protocolMissionGroup.Title = "test main name";
+            protocolMissionGroup.ProtocolDocumentId = Guid.NewGuid();
+            db.ProtocolMissionGroups.Add(protocolMissionGroup);
+            db.SaveChanges();
+        }
+
         return Enumerable.Range(1, 5).Select(index => new WeatherForecast
         {
             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
