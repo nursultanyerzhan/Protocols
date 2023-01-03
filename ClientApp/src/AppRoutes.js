@@ -1,6 +1,8 @@
 import { Counter } from "./components/Counter";
 import { FetchData } from "./components/FetchData";
 import { Home } from "./components/Home";
+import { ProtocolDocuments } from "./components/ProtocolDocuments";
+import { TestForm } from "./components/TestForm";
 
 const AppRoutes = [
   {
@@ -14,6 +16,14 @@ const AppRoutes = [
   {
     path: '/fetch-data',
     element: <FetchData />
+  },
+  {
+    path: '/documentsPath',
+    element: <ProtocolDocuments />
+  },
+  {
+    path: '/testForm',
+    element: <TestForm />
   }
 ];
 

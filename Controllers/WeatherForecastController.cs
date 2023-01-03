@@ -24,12 +24,14 @@ public class WeatherForecastController : ControllerBase
     {
         using (var db = new ProtocolsContext())
         {
-            ProtocolMissionGroup protocolMissionGroup = new ProtocolMissionGroup();
+            ProtocolDocument protocolMissionGroup = new ProtocolDocument();
             protocolMissionGroup.CreatedDate = DateTime.Now;
             protocolMissionGroup.Id = Guid.NewGuid();
-            protocolMissionGroup.Title = "test main name";
-            protocolMissionGroup.ProtocolDocumentId = Guid.NewGuid();
-            db.ProtocolMissionGroups.Add(protocolMissionGroup);
+            protocolMissionGroup.MeetingDay = DateTime.Now.ToShortDateString();
+            protocolMissionGroup.StartDate = DateTime.Now;
+            protocolMissionGroup.EndDate = DateTime.Now.AddDays(7);
+            protocolMissionGroup.Title = Guid.NewGuid().ToString();
+            db.ProtocolDocuments.Add(protocolMissionGroup);
             db.SaveChanges();
         }
 
@@ -40,5 +42,11 @@ public class WeatherForecastController : ControllerBase
             Summary = Summaries[Random.Shared.Next(Summaries.Length)]
         })
         .ToArray();
+    }
+
+    [HttpPost]
+    public void Post(string? email)
+    {
+        // return View();
     }
 }

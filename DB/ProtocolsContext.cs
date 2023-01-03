@@ -14,6 +14,7 @@ public class ProtocolsContext : DbContext
     public DbSet<ProtocolExecutor> ProtocolExecutors => Set<ProtocolExecutor>();
     public DbSet<ProtocolMission> ProtocolMissions => Set<ProtocolMission>();
     public DbSet<ProtocolMissionGroup> ProtocolMissionGroups => Set<ProtocolMissionGroup>();
+    public DbSet<ProtocolPeriodicalType> ProtocolPeriodicalTypes => Set<ProtocolPeriodicalType>();
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer(@"Data Source=SQL5063.site4now.net;Initial Catalog=db_a9221b_laylimyerjan;user id=db_a9221b_laylimyerjan_admin;password=E1551515515n;");
