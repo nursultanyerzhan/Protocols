@@ -25,7 +25,8 @@ export const ProtocolDocuments = () => {
         <ul>
             {documents.map((document) => (
                 <li key={document.id}>
-                    <Link to="/testForm" state={{ documentId: document.id }}>{document.id}</Link>
+                    {/* <Link to="/testForm" state={{ documentId: document.id }}>{document.id}</Link> */}
+                    <Link to="/testModal" state={{ documentId: document.id }}>{document.id}</Link>
                 </li>
             ))}
         </ul>

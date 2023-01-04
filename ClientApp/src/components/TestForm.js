@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom'
+import { Western } from './Western/Western';
 
 export const TestForm = (props) => {
 
@@ -8,7 +9,7 @@ export const TestForm = (props) => {
 
     console.log(documentId);
     return (
-        <button>{documentId}</button>
+        <Western />
     );
 }
 
