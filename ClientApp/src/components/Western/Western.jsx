@@ -14,13 +14,14 @@ const schema = yup.object().shape({
   state: yup.string().required(),
   zip: yup.string().required(),
   file: yup.mixed().required(),
+  selectVal: yup.number().required(),
   terms: yup.bool().required().oneOf([true], 'terms must be accepted'),
 });
 
 export const Western = () => {
 
   async function postData(url = '', data = {}) {
-    console.log('data = ', data);
+    // console.log('data = ', data);
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -35,11 +36,11 @@ export const Western = () => {
     <Formik
       validationSchema={schema}
       onSubmit={(formObject) => {
-
+        console.log(formObject);
         var formData = new FormData();
-        for ( var key in formObject ) {
+        for (var key in formObject) {
           formData.append(key, formObject[key]);
-      }
+        }
         postData('uploadphoto', formData)
           .then((data) => {
             console.log(data);
@@ -55,6 +56,7 @@ export const Western = () => {
         zip: '123123123123',
         file: null,
         terms: true,
+        selectVal: 0
       }}
     >
       {({
@@ -198,6 +200,14 @@ export const Western = () => {
             <Form.Control.Feedback type="invalid" tooltip>
               {errors.file}
             </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group>
+            <Form.Select aria-label="Default select example" name='selectVal' onChange={handleChange} >
+              <option>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </Form.Select>
           </Form.Group>
           <Form.Group className="position-relative mb-3">
             <Form.Check

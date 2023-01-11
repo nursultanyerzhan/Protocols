@@ -25,7 +25,7 @@ public class ProtocolDocumentController : ControllerBase
 
     [Route("postTestData")]
     [HttpPost]
-    public async Task<ActionResult> PostTestData([FromForm] IFormFile file) //, List<IFormFile> file
+    public async Task<ActionResult> PostTestData([FromForm] DtoEast data) //, List<IFormFile> file
     {
         var list = await _context.ProtocolDocuments
             .ToListAsync();
@@ -40,6 +40,22 @@ public class ProtocolDocumentController : ControllerBase
     }
 }
 
+public class Country
+{
+    public string label { get; set; }
+
+    public List<int> value { get; set; }
+}
+
+public class DtoEast
+{
+    public string userName { get; set; }
+    public int selectName { get; set; }
+    public List<int> country { get; set; }
+
+    public List<IFormFile> fileEast { get; set; }
+}
+
 public class DtoTestData
 {
     public string firstName { get; set; }
@@ -48,8 +64,10 @@ public class DtoTestData
     public string city { get; set; }
     public string state { get; set; }
     public string zip { get; set; }
+    public int selectVal { get; set; }
     public bool terms { get; set; }
-    public IFormFile File { get; set; }
+    // public IFormFile File { get; set; }
+    public List<IFormFile> File { get; set; }
 }
 
 public class UploadPhotoRequest

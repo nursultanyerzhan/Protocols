@@ -4,6 +4,7 @@ import { Home } from "./components/Home";
 import { Modal } from "./components/Modal/Modal";
 import { ProtocolDocuments } from "./components/ProtocolDocuments";
 import { TestForm } from "./components/TestForm";
+import { Eastern } from "./components/Eastern/Eastern";
 
 const AppRoutes = [
   {
@@ -30,6 +31,10 @@ const AppRoutes = [
   {
     path: '/testModal',
     element: <Modal />
+  },
+  {
+    path: '/eastern',
+    element: <Eastern />
   }
 ];
 
