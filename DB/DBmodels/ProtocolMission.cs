@@ -11,6 +11,6 @@ public class ProtocolMission : DataEntity
     public string EventName { get; set; }
     
     public DateTime Deadline { get; set; }
-
+    public Guid ProtocolPeriodicalTypeId { get; set; }
 }
 

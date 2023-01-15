@@ -23,8 +23,6 @@ export const Eastern = () => {
   const [countryValue, setCountryValue] = useState(null);
 
   const onformSubmit = (data) => {
-    console.log('data = ', data);
-    console.log(typeof [2,4]);
     const formData = new FormData();
 
     for (var key in data) {

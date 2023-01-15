@@ -9,6 +9,7 @@ const context = [
   "/getProtocolDocuments",
   "/postTestData",
   "/uploadphoto",
+  "/postDocument",
 ];
 
 const onError = (err, req, resp, target) => {

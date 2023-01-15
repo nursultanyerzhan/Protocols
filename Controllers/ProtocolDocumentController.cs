@@ -38,6 +38,13 @@ public class ProtocolDocumentController : ControllerBase
     {
         return "file.Name0000000000000000000000000000000";
     }
+    
+    [Route("postDocument")]
+    [HttpPost]
+    public string PostDocument([FromForm] DtoProtocolDocument data) //
+    {
+        return "file.Name0000000000000000000000000000000";
+    }
 }
 
 public class Country
@@ -45,6 +52,12 @@ public class Country
     public string label { get; set; }
 
     public List<int> value { get; set; }
+}
+public class DtoProtocolDocument
+{
+    public DateTime StartDate { get; set; }
+    public DateTime EndDate { get; set; }
+    public string Title { get; set; }
 }
 
 public class DtoEast
