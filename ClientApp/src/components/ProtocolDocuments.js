@@ -4,7 +4,7 @@ import { AddDocument } from './AddDocument/AddDocument';
 import { useGetPokemonByNameQuery } from '../services/pokemon';
 
 export const ProtocolDocuments = () => {
-    const { data, error, isLoading } = useGetPokemonByNameQuery();
+    const { data, error, isLoading } = useGetPokemonByNameQuery("", { pollingInterval: 3000 });
     const [show, setShow] = useState(false);
 
     const addDocument = () => setShow(true);
