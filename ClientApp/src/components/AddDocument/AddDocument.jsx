@@ -1,6 +1,7 @@
 import style from './AddDocument.module.css';
 import Modal from 'react-bootstrap/Modal';
 import { useForm, Controller } from "react-hook-form";
+import { useAddProtocolDocumentMutation } from "../../services/pokemon";
 
 export const AddDocument = ({ handleClose, show }) => {
   const {
@@ -10,25 +11,17 @@ export const AddDocument = ({ handleClose, show }) => {
     control
   } = useForm();
 
-  const onformSubmit = (data) => {
+  const [addProtocolDocument, { isError }] = useAddProtocolDocumentMutation();
+
+  const onformSubmit = async (data) => {
     const formData = new FormData();
 
     for (var key in data) {
       formData.append(key, data[key]);
     }
 
-    postData('postDocument', formData)
-      .then((data) => {
-        console.log(data);
-      });
-  }
-
-  async function postData(url = '', data = {}) {
-    const response = await fetch(url, {
-      method: 'POST',
-      body: data
-    });
-    return response.json();
+    await addProtocolDocument(formData);
+    handleClose();
   }
 
   return (

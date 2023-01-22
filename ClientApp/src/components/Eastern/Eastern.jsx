@@ -4,6 +4,7 @@ import { useForm, Controller } from "react-hook-form";
 // import { MultiSelectSample } from "../MultiSelectSample/MultiSelectSample";
 import { useEffect, useState } from "react";
 import Select from 'react-select';
+import { useAddProtocolDocumentMutation } from "../../services/pokemon";
 
 let country = [
   { label: "Bangladesh", value: "1" },
@@ -21,8 +22,9 @@ export const Eastern = () => {
   } = useForm();
 
   const [countryValue, setCountryValue] = useState(null);
+  const [addProtocolDocument, { isError }] = useAddProtocolDocumentMutation();
 
-  const onformSubmit = (data) => {
+  const onformSubmit = async (data) => {
     const formData = new FormData();
 
     for (var key in data) {
@@ -40,10 +42,11 @@ export const Eastern = () => {
       formData.append("country[]", data.country[i].value);
     }
 
-    postData('postTestData', formData)
-      .then((data) => {
-        console.log(data);
-      });
+    await addProtocolDocument(formData);
+    // postData('postTestData', formData)
+    //   .then((data) => {
+    //     console.log(data);
+    //   });
   };
 
   async function postData(url = '', data = {}) {

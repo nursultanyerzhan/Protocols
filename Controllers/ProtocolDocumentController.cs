@@ -43,7 +43,18 @@ public class ProtocolDocumentController : ControllerBase
     [HttpPost]
     public string PostDocument([FromForm] DtoProtocolDocument data) //
     {
-        return "file.Name0000000000000000000000000000000";
+        using (var db = new ProtocolsContext()) {
+            ProtocolDocument document = new ProtocolDocument();
+            document.CreatedDate = DateTime.Now;
+            document.EndDate = data.EndDate;
+            document.Id = Guid.NewGuid();
+            document.MeetingDay = data.StartDate.ToShortDateString();
+            document.StartDate= data.StartDate;
+            document.Title = data.Title;
+            db.ProtocolDocuments.Add(document);
+            db.SaveChanges();
+        }
+        return "Ok";
     }
 }
 
