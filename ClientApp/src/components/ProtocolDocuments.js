@@ -23,6 +23,7 @@ export const ProtocolDocuments = () => {
                         <thead>
                             <tr>
                                 <th>Id</th>
+                                <th>Title</th>
                                 <th>StartDate</th>
                                 <th>EndDate</th>
                             </tr>
@@ -32,7 +33,10 @@ export const ProtocolDocuments = () => {
                             {data.map((document) => (
                                 <tr key={document.id}>
                                     <td>
-                                        <Link to="/testForm" state={{ documentId: document.id }}>{document.id}</Link>
+                                        <Link to="/protocolDocument" state={{ documentId: document.id }}>{document.id}</Link>
+                                    </td>
+                                    <td>
+                                        {document.title}
                                     </td>
                                     <td>
                                         {document.startDate}

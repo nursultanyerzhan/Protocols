@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 // Define a service using a base URL and expected endpoints
 export const pokemonApi = createApi({
   reducerPath: 'pokemonApi',
-  tagTypes: ['ProtocolDocuments'],
+  tagTypes: ['ProtocolDocuments', 'ProtocolGroup', 'ProtocolMission'],
   baseQuery: fetchBaseQuery({ baseUrl: 'https://localhost:44465/' }),
   endpoints: (builder) => ({
     getPokemonByName: builder.query({
@@ -22,10 +22,50 @@ export const pokemonApi = createApi({
         body,
       }),
       invalidatesTags: [{ type: 'ProtocolDocuments', id: 'List' }]
-    })
+    }),
+    getProtocolGroups: builder.query({
+      query: (documentId) => `getProtocolGroup?documentId=${documentId}`,
+      providesTags: (result) => result ?
+        [
+          ...result.map(({ id }) => ({ type: 'ProtocolGroup', id })),
+          { type: 'ProtocolGroup', id: 'List' }
+        ] :
+        [{ type: 'ProtocolGroup', id: 'List' }]
+    }),
+    addProtocolGroup: builder.mutation({
+      query: (body) => ({
+        url: 'postProtocolGroup',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'ProtocolGroup', id: 'List' }]
+    }),
+    getProtocolMissions: builder.query({
+      query: (groupId) => `getProtocolMissions?groupId=${groupId}`,
+      providesTags: (result) => result ?
+        [
+          ...result.map(({ id }) => ({ type: 'ProtocolMission', id })),
+          { type: 'ProtocolMission', id: 'List' }
+        ] :
+        [{ type: 'ProtocolMission', id: 'List' }]
+    }),
+    addProtocolMission: builder.mutation({
+      query: (body) => ({
+        url: 'postProtocolMission',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'ProtocolMission', id: 'List' }]
+    }),
   }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetPokemonByNameQuery, useAddProtocolDocumentMutation } = pokemonApi;
+export const { 
+  useGetPokemonByNameQuery, 
+  useAddProtocolDocumentMutation, 
+  useGetProtocolGroupsQuery,
+  useAddProtocolGroupMutation, 
+  useGetProtocolMissionsQuery, 
+  useAddProtocolMissionMutation } = pokemonApi;

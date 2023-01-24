@@ -2,6 +2,7 @@ using BrunoZell.ModelBinding;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Protocols.DB;
+using Protocols.DB.DBmodels;
 
 namespace Protocols.Controllers;
 
@@ -20,6 +21,24 @@ public class ProtocolDocumentController : ControllerBase
     {
         var list = await _context.ProtocolDocuments
             .ToListAsync();
+        return Ok(list);
+    }
+    
+    [Route("getProtocolGroup")]
+    public async Task<ActionResult> GetProtocolGroupList(Guid documentId)
+    {
+        var list = await _context.ProtocolMissionGroups.Where(r => r.ProtocolDocumentId == documentId)
+                                                       .OrderBy(r => r.CreatedDate)
+                                                       .ToListAsync();
+        return Ok(list);
+    }
+   
+    [Route("getProtocolMissions")]
+    public async Task<ActionResult> GetProtocolMissions(Guid groupId)
+    {
+        var list = await _context.ProtocolMissions.Where(r => r.ProtocolMissionGroupId== groupId)
+                                                       .OrderBy(r => r.CreatedDate)
+                                                       .ToListAsync();
         return Ok(list);
     }
 
@@ -56,6 +75,40 @@ public class ProtocolDocumentController : ControllerBase
         }
         return "Ok";
     }
+    
+    [Route("postProtocolGroup")]
+    [HttpPost]
+    public string PostProtocolGroup([FromForm] DtoProtocolGroup data) //
+    {
+        using (var db = new ProtocolsContext()) {
+            ProtocolMissionGroup missionGroup = new ProtocolMissionGroup();
+            missionGroup.CreatedDate = DateTime.Now;
+            missionGroup.Id = Guid.NewGuid();
+            missionGroup.Title = data.Title;
+            missionGroup.ProtocolDocumentId = data.ProtocolDocumentId;
+            db.ProtocolMissionGroups.Add(missionGroup);
+            db.SaveChanges();
+        }
+        return "Ok";
+    }
+    
+    [Route("postProtocolMission")]
+    [HttpPost]
+    public string PostProtocolMission([FromForm] DtoProtocolMission data) //
+    {
+        using (var db = new ProtocolsContext()) {
+            ProtocolMission mission = new ProtocolMission();
+            mission.CreatedDate = DateTime.Now;
+            mission.Id = Guid.NewGuid();
+            mission.Deadline = data.Deadline;
+            mission.EventName = data.EventName;
+            mission.ProtocolPeriodicalTypeId = Guid.Parse("EC3A155D-7742-4174-834C-05E01390BE97");
+            mission.ProtocolMissionGroupId = data.ProtocolMissionGroupId;
+            db.ProtocolMissions.Add(mission);
+            db.SaveChanges();
+        }
+        return "Ok";
+    }
 }
 
 public class Country
@@ -69,6 +122,21 @@ public class DtoProtocolDocument
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public string Title { get; set; }
+}
+
+public class DtoProtocolGroup
+{
+    public Guid ProtocolDocumentId { get; set; }
+    
+    public string Title { get; set; }
+}
+
+public class DtoProtocolMission
+{
+    public Guid ProtocolMissionGroupId { get; set; }
+    public string EventName { get; set; }
+    public DateTime Deadline { get; set; }
+    public Guid ProtocolPeriodicalTypeId { get; set; }
 }
 
 public class DtoEast

@@ -10,6 +10,11 @@ const context = [
   "/postTestData",
   "/uploadphoto",
   "/postDocument",
+  "/protocolDocument",
+  "/getProtocolGroup",
+  "/postProtocolGroup",
+  "/getProtocolMissions",
+  "/postProtocolMission",
 ];
 
 const onError = (err, req, resp, target) => {

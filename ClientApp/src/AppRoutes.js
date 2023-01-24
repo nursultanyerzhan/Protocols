@@ -5,6 +5,7 @@ import { Modal } from "./components/Modal/Modal";
 import { ProtocolDocuments } from "./components/ProtocolDocuments";
 import { TestForm } from "./components/TestForm";
 import { Eastern } from "./components/Eastern/Eastern";
+import { ProtocolDocument } from "./components/ProtocolDocument/ProtocolDocument";
 import { RtqSample } from "./components/RtqSample/RtqSample";
 
 const AppRoutes = [
@@ -40,6 +41,10 @@ const AppRoutes = [
   {
     path: '/rtqSample',
     element: <RtqSample />
+  },
+  {
+    path: '/protocolDocument',
+    element: <ProtocolDocument />
   }
 ];
 
