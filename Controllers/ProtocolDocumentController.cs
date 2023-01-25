@@ -23,7 +23,7 @@ public class ProtocolDocumentController : ControllerBase
             .ToListAsync();
         return Ok(list);
     }
-    
+
     [Route("getProtocolGroup")]
     public async Task<ActionResult> GetProtocolGroupList(Guid documentId)
     {
@@ -32,11 +32,20 @@ public class ProtocolDocumentController : ControllerBase
                                                        .ToListAsync();
         return Ok(list);
     }
-   
+
     [Route("getProtocolMissions")]
     public async Task<ActionResult> GetProtocolMissions(Guid groupId)
     {
-        var list = await _context.ProtocolMissions.Where(r => r.ProtocolMissionGroupId== groupId)
+        var list = await _context.ProtocolMissions.Where(r => r.ProtocolMissionGroupId == groupId)
+                                                       .OrderBy(r => r.CreatedDate)
+                                                       .ToListAsync();
+        return Ok(list);
+    }
+
+    [Route("getProtocolExecutors")]
+    public async Task<ActionResult> GetProtocolExecutors(Guid missionId)
+    {
+        var list = await _context.ProtocolExecutors.Where(r => r.ProtocolMissionId == missionId && r.DeletedDate == null)
                                                        .OrderBy(r => r.CreatedDate)
                                                        .ToListAsync();
         return Ok(list);
@@ -57,30 +66,32 @@ public class ProtocolDocumentController : ControllerBase
     {
         return "file.Name0000000000000000000000000000000";
     }
-    
+
     [Route("postDocument")]
     [HttpPost]
     public string PostDocument([FromForm] DtoProtocolDocument data) //
     {
-        using (var db = new ProtocolsContext()) {
+        using (var db = new ProtocolsContext())
+        {
             ProtocolDocument document = new ProtocolDocument();
             document.CreatedDate = DateTime.Now;
             document.EndDate = data.EndDate;
             document.Id = Guid.NewGuid();
             document.MeetingDay = data.StartDate.ToShortDateString();
-            document.StartDate= data.StartDate;
+            document.StartDate = data.StartDate;
             document.Title = data.Title;
             db.ProtocolDocuments.Add(document);
             db.SaveChanges();
         }
         return "Ok";
     }
-    
+
     [Route("postProtocolGroup")]
     [HttpPost]
     public string PostProtocolGroup([FromForm] DtoProtocolGroup data) //
     {
-        using (var db = new ProtocolsContext()) {
+        using (var db = new ProtocolsContext())
+        {
             ProtocolMissionGroup missionGroup = new ProtocolMissionGroup();
             missionGroup.CreatedDate = DateTime.Now;
             missionGroup.Id = Guid.NewGuid();
@@ -91,12 +102,13 @@ public class ProtocolDocumentController : ControllerBase
         }
         return "Ok";
     }
-    
+
     [Route("postProtocolMission")]
     [HttpPost]
     public string PostProtocolMission([FromForm] DtoProtocolMission data) //
     {
-        using (var db = new ProtocolsContext()) {
+        using (var db = new ProtocolsContext())
+        {
             ProtocolMission mission = new ProtocolMission();
             mission.CreatedDate = DateTime.Now;
             mission.Id = Guid.NewGuid();
@@ -109,6 +121,33 @@ public class ProtocolDocumentController : ControllerBase
         }
         return "Ok";
     }
+
+    [Route("postProtocolExecutors")]
+    [HttpPost]
+    public string PostProtocolExecutors([FromForm] DtoProtocolExecutor data) //
+    {
+        using (var db = new ProtocolsContext())
+        {
+            ProtocolExecutor executor = new ProtocolExecutor();
+            executor.CreatedDate = DateTime.Now;
+            executor.Id = Guid.NewGuid();
+            executor.FreeUserName = data.FreeUserName;
+            executor.ProtocolMissionId = data.ProtocolMissionId;
+            executor.ProtocolUserId = Guid.NewGuid();
+            db.ProtocolExecutors.Add(executor);
+            db.SaveChanges();
+        }
+        return "Ok";
+    }
+}
+
+public class DtoProtocolExecutor
+{
+    public Guid ProtocolMissionId { get; set; }
+
+    public Guid ProtocolUserId { get; set; }
+    
+    public string FreeUserName { get; set; }
 }
 
 public class Country
@@ -127,7 +166,7 @@ public class DtoProtocolDocument
 public class DtoProtocolGroup
 {
     public Guid ProtocolDocumentId { get; set; }
-    
+
     public string Title { get; set; }
 }
 

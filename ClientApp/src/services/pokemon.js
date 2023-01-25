@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 // Define a service using a base URL and expected endpoints
 export const pokemonApi = createApi({
   reducerPath: 'pokemonApi',
-  tagTypes: ['ProtocolDocuments', 'ProtocolGroup', 'ProtocolMission'],
+  tagTypes: ['ProtocolDocuments', 'ProtocolGroup', 'ProtocolMission', 'ProtocolExecutor'],
   baseQuery: fetchBaseQuery({ baseUrl: 'https://localhost:44465/' }),
   endpoints: (builder) => ({
     getPokemonByName: builder.query({
@@ -57,6 +57,23 @@ export const pokemonApi = createApi({
       }),
       invalidatesTags: [{ type: 'ProtocolMission', id: 'List' }]
     }),
+    getProtocolExecutors: builder.query({
+      query: (missionId) => `getProtocolExecutors?missionId=${missionId}`,
+      providesTags: (result) => result ?
+        [
+          ...result.map(({ id }) => ({ type: 'ProtocolExecutor', id })),
+          { type: 'ProtocolExecutor', id: 'List' }
+        ] :
+        [{ type: 'ProtocolExecutor', id: 'List' }]
+    }),
+    addProtocolExecutors: builder.mutation({
+      query: (body) => ({
+        url: 'postProtocolExecutors',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'ProtocolExecutor', id: 'List' }]
+    }),
   }),
 })
 
@@ -68,4 +85,6 @@ export const {
   useGetProtocolGroupsQuery,
   useAddProtocolGroupMutation, 
   useGetProtocolMissionsQuery, 
-  useAddProtocolMissionMutation } = pokemonApi;
+  useAddProtocolMissionMutation, 
+  useGetProtocolExecutorsQuery,
+  useAddProtocolExecutorsMutation } = pokemonApi;

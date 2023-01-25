@@ -1,6 +1,6 @@
 import style from './AddProtocolMission.module.css';
 import Modal from 'react-bootstrap/Modal';
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useAddProtocolMissionMutation } from "../../services/pokemon";
 
 export const AddProtocolMission = ({ handleClose, show, groupId }) => {

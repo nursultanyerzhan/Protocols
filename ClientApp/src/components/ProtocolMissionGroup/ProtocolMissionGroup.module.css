@@ -5,3 +5,7 @@
 .titleGroup {
     background-color: rgb(229, 241, 237) !important;
 }
+
+.titleMargin {
+    margin-top: -26px;
+}

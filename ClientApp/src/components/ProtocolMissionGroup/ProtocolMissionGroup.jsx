@@ -2,6 +2,7 @@ import style from './ProtocolMissionGroup.module.css';
 import { AddProtocolMission } from "../AddProtocolMission/AddProtocolMission";
 import { useEffect, useState } from 'react';
 import { useGetProtocolMissionsQuery } from "../../services/pokemon";
+import { ProtocolExecutors } from "../ProtocolExecutors/ProtocolExecutors";
 
 export const ProtocolMissionGroup = (props) => {
   const { groupId, title } = props;
@@ -14,12 +15,12 @@ export const ProtocolMissionGroup = (props) => {
     <>
       <tr key={groupId}>
         <td colSpan={4} className={style.titleGroup}>
-            <button className='btn btn-primary' onClick={addProtocolMission}>Добавить</button>
-            <center>
-              <strong>
-                {title}
-              </strong>
-            </center>
+          <button className='btn btn-primary' onClick={addProtocolMission}>+</button>
+          <center className={style.titleMargin}>
+            <strong>
+              {title}
+            </strong>
+          </center>
         </td>
       </tr>
       {error ? (
@@ -32,8 +33,9 @@ export const ProtocolMissionGroup = (props) => {
             <tr key={mission.id}>
               <td>{mission.eventName}</td>
               <td>{mission.deadline}</td>
-              <td></td>
-              {/* <ProtocolMissionGroup groupId={group.id} title={group.title}></ProtocolMissionGroup> */}
+              <td>
+                <ProtocolExecutors missionId={mission.id}></ProtocolExecutors>
+              </td>
             </tr>
           ))}
         </>

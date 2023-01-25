@@ -15,6 +15,8 @@ const context = [
   "/postProtocolGroup",
   "/getProtocolMissions",
   "/postProtocolMission",
+  "/getProtocolExecutors",
+  "/postProtocolExecutors",
 ];
 
 const onError = (err, req, resp, target) => {
