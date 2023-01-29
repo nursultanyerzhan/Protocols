@@ -6,6 +6,15 @@ export const pokemonApi = createApi({
   tagTypes: ['ProtocolDocuments', 'ProtocolGroup', 'ProtocolMission', 'ProtocolExecutor'],
   baseQuery: fetchBaseQuery({ baseUrl: 'https://localhost:44465/' }),
   endpoints: (builder) => ({
+    hasRole: builder.query({
+      query: () => `hasRole`,
+      // providesTags: (result) => result ?
+      //   [
+      //     ...result.map(({ id }) => ({ type: 'ProtocolDocuments', id })),
+      //     { type: 'ProtocolDocuments', id: 'List' }
+      //   ] :
+      //   [{ type: 'ProtocolDocuments', id: 'List' }]
+    }),
     getPokemonByName: builder.query({
       query: () => `getProtocolDocuments`,
       providesTags: (result) => result ?
@@ -87,4 +96,5 @@ export const {
   useGetProtocolMissionsQuery, 
   useAddProtocolMissionMutation, 
   useGetProtocolExecutorsQuery,
-  useAddProtocolExecutorsMutation } = pokemonApi;
+  useAddProtocolExecutorsMutation,
+  useHasRoleQuery } = pokemonApi;

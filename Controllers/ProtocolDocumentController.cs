@@ -16,6 +16,13 @@ public class ProtocolDocumentController : ControllerBase
         _context = context;
     }
 
+    [Route("hasRole")]
+    public bool HasRole()
+    {
+        var hasRole = _context.UserRoles.Any(r => r.HasRole == true);
+        return hasRole;
+    }
+
     [Route("getProtocolDocuments")]
     public async Task<ActionResult> GetList()
     {

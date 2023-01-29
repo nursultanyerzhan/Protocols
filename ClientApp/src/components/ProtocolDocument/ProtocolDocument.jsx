@@ -1,5 +1,5 @@
 import style from './ProtocolDocument.module.css';
-import { useGetProtocolGroupsQuery } from '../../services/pokemon';
+import { useGetProtocolGroupsQuery, useHasRoleQuery } from '../../services/pokemon';
 import { AddProtocolMissionGroup } from '../AddProtocolMissionGroup/AddProtocolMissionGroup';
 import { useLocation } from 'react-router-dom';
 import { ProtocolMissionGroup } from '../ProtocolMissionGroup/ProtocolMissionGroup';
